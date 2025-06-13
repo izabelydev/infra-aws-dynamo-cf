@@ -1,0 +1,84 @@
+AWSTemplateFormatVersion: "2010-09-09"
+
+Resources:
+  TabelaCandidatos:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: candidatos
+      BillingMode: PAY_PER_REQUEST
+
+      AttributeDefinitions:
+        - AttributeName: cand_cod_cand
+          AttributeType: S
+        - AttributeName: cand_nome_cand
+          AttributeType: S
+        - AttributeName: cand_sal_pret
+          AttributeType: N
+        - AttributeName: cand_ctt_email
+          AttributeType: S
+        - AttributeName: cand_ctt_celular
+          AttributeType: S
+        - AttributeName: cand_sel_res_prop_cod_vaga
+          AttributeType: S
+        - AttributeName: cand_sel_res_prop_sal_base
+          AttributeType: N
+        - AttributeName: cand_sel_res_prop_res
+          AttributeType: S
+        - AttributeName: cand_sel_res_prop_lig
+          AttributeType: S
+
+      KeySchema:
+        - AttributeName: cand_cod_cand
+          KeyType: HASH
+        - AttributeName: cand_sel_res_prop_cod_vaga
+          KeyType: RANGE
+
+      GlobalSecondaryIndexes:
+        - IndexName: nome-cand-index
+          KeySchema:
+            - AttributeName: cand_nome_cand
+              KeyType: HASH
+          Projection:
+            ProjectionType: ALL
+
+        - IndexName: sal_pret_index
+          KeySchema:
+            - AttributeName: cand_sal_pret
+              KeyType: HASH
+          Projection:
+            ProjectionType: ALL
+
+        - IndexName: ctt_email_index
+          KeySchema:
+            - AttributeName: cand_ctt_email
+              KeyType: HASH
+          Projection:
+            ProjectionType: ALL
+
+        - IndexName: ctt_celular_index
+          KeySchema:
+            - AttributeName: cand_ctt_celular
+              KeyType: HASH
+          Projection:
+            ProjectionType: ALL
+
+        - IndexName: res_prop_sal_base_index
+          KeySchema:
+            - AttributeName: cand_sel_res_prop_sal_base
+              KeyType: HASH
+          Projection:
+            ProjectionType: ALL
+
+        - IndexName: res_prop_res_index
+          KeySchema:
+            - AttributeName: cand_sel_res_prop_res
+              KeyType: HASH
+          Projection:
+            ProjectionType: ALL
+
+        - IndexName: res_prop_lig_index
+          KeySchema:
+            - AttributeName: cand_sel_res_prop_lig
+              KeyType: HASH
+          Projection:
+            ProjectionType: ALL
